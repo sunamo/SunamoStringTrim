@@ -54,7 +54,7 @@ public class SHTrim : SHData
         var result = lyricsFirstOriginal.Replace("\t", AllStrings.space).Replace("\r", AllStrings.space).Replace("\n", AllStrings.space).Replace(AllStringsSE.doubleSpace, AllStrings.space);
         if (replaceDoubleSpaceForSingle)
         {
-            result = SHReplace.ReplaceAllDoubleSpaceToSingle(result, true);
+            result = result.Replace("\"", "'"); //SHReplace.ReplaceAllDoubleSpaceToSingle(result, true);
         }
         return result;
     }
