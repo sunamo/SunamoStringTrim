@@ -1,5 +1,7 @@
+namespace SunamoStringTrim._sunamo;
+
 //namespace SunamoStringTrim._sunamo;
-//public class SH
+//internal class SH
 //{
-//    public static Func<string, bool, string> ReplaceAllDoubleSpaceToSingle;
+//    internal static Func<string, bool, string> ReplaceAllDoubleSpaceToSingle;
 //}
