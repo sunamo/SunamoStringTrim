@@ -51,7 +51,7 @@ public class SHTrim : SHData
 
     public static string TrimNewLineAndTab(string lyricsFirstOriginal, bool replaceDoubleSpaceForSingle = false)
     {
-        var result = lyricsFirstOriginal.Replace("\t", AllStrings.space).Replace("\r", AllStrings.space).Replace("\n", AllStrings.space).Replace(AllStringsSE.doubleSpace, AllStrings.space);
+        var result = lyricsFirstOriginal.Replace("\t", AllStrings.space).Replace("\r", AllStrings.space).Replace("\n", AllStrings.space).Replace(AllStrings.doubleSpace, AllStrings.space);
         if (replaceDoubleSpaceForSingle)
         {
             result = result.Replace("\"", "'"); //SHReplace.ReplaceAllDoubleSpaceToSingle(result, true);
@@ -153,7 +153,7 @@ public class SHTrim : SHData
 
     public static string AdvancedTrim(string p)
     {
-        return p.Replace(AllStringsSE.doubleSpace, AllStringsSE.space).Trim();
+        return p.Replace(AllStrings.doubleSpace, AllStrings.space).Trim();
     }
 
     public static string TrimLeadingNumbersAtStart(string nameSolution)
