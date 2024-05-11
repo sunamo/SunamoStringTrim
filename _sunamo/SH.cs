@@ -1,4 +1,4 @@
-namespace SunamoStringTrim._sunamo;
+namespace SunamoStringTrim;
 
 //namespace SunamoStringTrim._sunamo;
 //internal class SH
