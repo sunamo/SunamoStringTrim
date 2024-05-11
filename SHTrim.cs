@@ -117,7 +117,7 @@ public class SHTrim : SHData
 
     public static string TrimEnd(string name)
     {
-        return name.TrimEnd(AllCharsSE.whiteSpacesChars.ToArray());
+        return name.TrimEnd(AllChars.whiteSpacesChars.ToArray());
     }
 
     public static bool TrimIfStartsWith(ref string s, string p)
