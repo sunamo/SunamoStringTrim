@@ -7,8 +7,6 @@
     <Description>Methods for trimming strings</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SunamoChar" Version="24.2.6.2" />
-    <PackageReference Include="SunamoStringData" Version="24.2.6.2" />
     <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
     <Compile Include="..\SunamoValues\AllChars.cs" Link="_linked\SunamoValues\AllChars.cs" />
     <Compile Include="..\SunamoExceptions\OnlyInSE\Exc.cs" Link="_linked\SunamoExceptions\OnlyInSE\Exc.cs" />
