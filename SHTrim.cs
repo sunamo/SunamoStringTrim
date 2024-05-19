@@ -1,6 +1,12 @@
-namespace SunamoStringTrim;
+namespace
+#if SunamoDevCode
+SunamoDevCode
+#else
+SunamoStringTrim
+#endif
+;
 
-// : SHData mi způsobilo chyby Reference to type '' claims it is defined in '', but it could not be found. důvod byl jednoduchý, původně jsem chtěl dědit z SHSE který bude dědit z SHData. Pak jsem to ale obrátil. Neměl jsem zkompilované nové SunamoStringData ve kterém nebylo SunExc a VS sice ví kde hledaná třída je ale neřekne přímo ten problém. Proto to vše bylo takové matoucí. 
+// : SHData mi způsobilo chyby Reference to type '' claims it is defined in '', but it could not be found. důvod byl jednoduchý, původně jsem chtěl dědit z SHSE který bude dědit z SHData. Pak jsem to ale obrátil. Neměl jsem zkompilované nové SunamoStringData ve kterém nebylo SunExc a VS sice ví kde hledaná třída je ale neřekne přímo ten problém. Proto to vše bylo takové matoucí.
 public class SHTrim : SHData
 {
     public static string TrimStartingAndTrailingChars(string html, out StringBuilder fromStart, out StringBuilder fromEnd)
