@@ -21,6 +21,7 @@
     <Compile Include="..\SunamoExceptions\SHSE.cs" Link="_linked\SunamoExceptions\SHSE.cs" />
     <Compile Include="..\SunamoChar\CharHelper.cs" Link="_linked\SunamoChar\CharHelper.cs" />
     <Compile Include="..\SunamoChar\Enums\UnicodeChars.cs" Link="_linked\SunamoChar\Enums\UnicodeChars.cs" />
+    <Compile Include="..\SunamoXlfKeys\XlfKeys.cs" Link="_linked\SunamoXlfKeys\XlfKeys.cs" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC;SunamoStringTrim</DefineConstants>
