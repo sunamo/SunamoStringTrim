@@ -1,7 +1,7 @@
 namespace SunamoStringTrim;
 
 
-internal enum UnicodeChars
+public enum UnicodeChars
 {
     #region char.Is*
     Control,
