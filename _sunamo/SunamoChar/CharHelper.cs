@@ -1,13 +1,13 @@
 namespace SunamoStringTrim;
 
 
-public partial class CharHelper
+internal partial class CharHelper
 {
-    public static List<string> SplitSpecial(string text, params char[] deli)
+    internal static List<string> SplitSpecial(string text, params char[] deli)
     {
         return SplitSpecial(StringSplitOptions.RemoveEmptyEntries, text, deli);
     }
-    public static List<string> SplitSpecialNone(string text, params char[] deli)
+    internal static List<string> SplitSpecialNone(string text, params char[] deli)
     {
         return SplitSpecial(StringSplitOptions.None, text, deli);
     }
@@ -104,7 +104,7 @@ public partial class CharHelper
     /// <param name="dx"></param>
     /// <param name="s"></param>
     /// <param name="ch"></param>
-    public static bool IsSpecialChar(int dx, ref string s, ref char ch, bool immediatelyRemove = false)
+    internal static bool IsSpecialChar(int dx, ref string s, ref char ch, bool immediatelyRemove = false)
     {
         ch = s[dx];
         return IsSpecialChar(ch, ref s, dx, immediatelyRemove);
@@ -141,7 +141,7 @@ public partial class CharHelper
         }
         return false;
     }
-    public static List<UnicodeChars> TypesOfUnicodeChars(string s)
+    internal static List<UnicodeChars> TypesOfUnicodeChars(string s)
     {
         List<UnicodeChars> ch = new List<UnicodeChars>();
         foreach (var item in s)
@@ -150,7 +150,7 @@ public partial class CharHelper
         }
         return ch.Distinct().ToList();
     }
-    public static UnicodeChars IsUnicodeChar(char ch)
+    internal static UnicodeChars IsUnicodeChar(char ch)
     {
         if (char.IsControl(ch))
         {
@@ -208,7 +208,7 @@ public partial class CharHelper
         // Still was throwing NotImplementedCase for 㣯 => Special. not all chars catch all ifs
         return UnicodeChars.Special;
     }
-    public static bool IsUnicodeChar(UnicodeChars generic, char c)
+    internal static bool IsUnicodeChar(UnicodeChars generic, char c)
     {
         switch (generic)
         {
@@ -243,7 +243,7 @@ public partial class CharHelper
                 return false;
         }
     }
-    public static bool IsSpecial(char c)
+    internal static bool IsSpecial(char c)
     {
         bool v = AllChars.specialChars.Contains(c);
         if (!v)
@@ -252,15 +252,15 @@ public partial class CharHelper
         }
         return v;
     }
-    public static string OnlyDigits(string v)
+    internal static string OnlyDigits(string v)
     {
         return OnlyAccepted(v, char.IsDigit);
     }
-    public static bool IsGeneric(char c)
+    internal static bool IsGeneric(char c)
     {
         return AllChars.generalChars.Contains(c);
     }
-    public static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
+    internal static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
     {
         StringBuilder sb = new StringBuilder();
         bool result = false;
@@ -278,7 +278,7 @@ public partial class CharHelper
         }
         return sb.ToString();
     }
-    public static string OnlyAccepted(string v, List<Func<char, bool>> isDigit, bool not = false)
+    internal static string OnlyAccepted(string v, List<Func<char, bool>> isDigit, bool not = false)
     {
         StringBuilder sb = new StringBuilder();
         //bool result = true;
