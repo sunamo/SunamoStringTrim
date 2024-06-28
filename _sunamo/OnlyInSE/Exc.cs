@@ -1,3 +1,5 @@
+
+namespace SunamoStringTrim;
 using System.Diagnostics;
 using System.Text;
 

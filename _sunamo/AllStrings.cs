@@ -1,3 +1,5 @@
+
+namespace SunamoStringTrim;
 public class AllStrings
 {
     public const string dot = ".";

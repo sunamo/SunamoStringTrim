@@ -1,3 +1,5 @@
+
+namespace SunamoStringTrim;
 public class TranslateAble
 {
     
