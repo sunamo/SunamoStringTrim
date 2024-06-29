@@ -129,7 +129,11 @@ public class SHTrim //: SHData
         }
         return false;
     }
-
+    internal static string TrimEnd(string name, string ext)
+    {
+        while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
+        return name;
+    }
     public static string TrimStartAndEnd(string v, string s, string e)
     {
         v = TrimEnd(v, e);
