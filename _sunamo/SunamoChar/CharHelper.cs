@@ -1,7 +1,7 @@
 namespace SunamoStringTrim;
 
 
-internal partial class CharHelper
+internal class CharHelper
 {
     internal static List<string> SplitSpecial(string text, params char[] deli)
     {
@@ -239,7 +239,7 @@ internal partial class CharHelper
             case UnicodeChars.Generic:
                 return IsGeneric(c);
             default:
-                ThrowEx.NotImplementedCase (generic.ToString());
+                ThrowEx.NotImplementedCase(generic.ToString());
                 return false;
         }
     }
