@@ -1,4 +1,4 @@
-namespace SunamoStringTrim;
+namespace SunamoStringTrim._sunamo.SunamoExceptions;
 
 
 internal class SHSE

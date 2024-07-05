@@ -1,4 +1,4 @@
-namespace SunamoStringTrim;
+namespace SunamoStringTrim._sunamo.SunamoChar.Enums;
 
 
 internal enum UnicodeChars
