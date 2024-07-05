@@ -229,4 +229,3 @@ public class SHTrim //: SHData
         return nameSolution;
     }
 }
-

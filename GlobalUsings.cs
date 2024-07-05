@@ -16,3 +16,6 @@ global using SunamoStringTrim._sunamo.SunamoXlfKeys;
 global using SunamoStringTrim._sunamo.SunamoChar.Enums;
 global using SunamoStringTrim._sunamo.SunamoExceptions.OnlyInSE;
 global using SunamoStringTrim._sunamo.SunamoExceptions._AddedToAllCsproj;
+global using System.Diagnostics;
+global using System.Net;
+global using System.Threading.Tasks;
