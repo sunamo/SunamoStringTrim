@@ -1,6 +1,5 @@
 namespace SunamoStringTrim._sunamo.SunamoChar;
 
-
 internal class CharHelper
 {
     internal static List<string> SplitSpecial(string text, params char[] deli)
