@@ -1,4 +1,4 @@
-namespace SunamoStringTrim._sunamo.SunamoExceptions;
+//namespace SunamoStringTrim._sunamo.SunamoExceptions;
 
 internal class SH
 {
@@ -10,8 +10,8 @@ internal class SH
         r = sb.ToString();
         return r;
     }
-    
-    
+
+
     internal static string FirstCharLower(string nazevPP)
     {
         if (nazevPP.Length < 2) return nazevPP;
@@ -69,7 +69,7 @@ internal class SH
     internal static string NullToStringOrDefault(object n, string v)
     {
         throw new Exception(
-        "Tahle metoda vypadala jinak ale jak idiot jsem ji změnil. Tím jak jsem poté přesouval metody tam zpět už je těžké se k tomu dostat.");
+            "Tahle metoda vypadala jinak ale jak idiot jsem ji změnil. Tím jak jsem poté přesouval metody tam zpět už je těžké se k tomu dostat.");
         return null;
         //return n == null ? " " + Consts.nulled : AllStrings.space + v.ToString();
     }
@@ -97,4 +97,5 @@ internal class SH
         while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
         return name;
     }
+
 }
