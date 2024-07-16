@@ -1,4 +1,4 @@
-//namespace SunamoStringTrim._sunamo.SunamoExceptions;
+namespace SunamoStringTrim._sunamo.SunamoExceptions;
 
 internal class SH
 {
