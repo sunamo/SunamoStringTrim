@@ -3,66 +3,50 @@ namespace SunamoStringTrim;
 // //: SHData mi způsobilo chyby Reference to type '' claims it is defined in '', but it could not be found. důvod byl jednoduchý, původně jsem chtěl dědit z SHSE který bude dědit z SHData. Pak jsem to ale obrátil. Neměl jsem zkompilované nové SunamoStringData ve kterém nebylo SunExc a VS sice ví kde hledaná třída je ale neřekne přímo ten problém. Proto to vše bylo takové matoucí.
 public class SHTrim //: SHData
 {
-    public static string TrimStartingAndTrailingChars(string html, out StringBuilder fromStart, out StringBuilder fromEnd)
+    public static string TrimStartingAndTrailingChars(string html, out StringBuilder fromStart,
+        out StringBuilder fromEnd)
     {
         fromStart = new StringBuilder();
         fromEnd = new StringBuilder();
-        char specialChar = 'a';
+        var specialChar = 'a';
 
-        for (int i = 0; i < html.Length; i++)
-        {
+        for (var i = 0; i < html.Length; i++)
             if (CharHelper.IsSpecialChar(i, ref html, ref specialChar, true))
-            {
                 fromStart.Append(specialChar);
-            }
             else
-            {
                 break;
-            }
-        }
 
-        for (int i = html.Length - 1; i >= 0; i--)
-        {
+        for (var i = html.Length - 1; i >= 0; i--)
             if (CharHelper.IsSpecialChar(i, ref html, ref specialChar, true))
-            {
                 fromEnd.Insert(0, specialChar);
-            }
             else
-            {
                 break;
-            }
-        }
 
         return html;
     }
 
     /// <summary>
-    /// Vrátí SE když A1 bude null, pokud null nebude, trimuje ho
+    ///     Vrátí SE když A1 bude null, pokud null nebude, trimuje ho
     /// </summary>
     /// <param name="p"></param>
     public static string TrimIsNotNull(string p)
     {
-        if (p != null)
-        {
-            return p.Trim();
-        }
+        if (p != null) return p.Trim();
         return "";
     }
 
     public static string TrimNewLineAndTab(string lyricsFirstOriginal, bool replaceDoubleSpaceForSingle = false)
     {
-        var result = lyricsFirstOriginal.Replace("\t", AllStrings.space).Replace("\r", AllStrings.space).Replace("\n", AllStrings.space).Replace(AllStrings.doubleSpace, AllStrings.space);
+        var result = lyricsFirstOriginal.Replace("\t", AllStrings.space).Replace("\r", AllStrings.space)
+            .Replace("\n", AllStrings.space).Replace(AllStrings.doubleSpace, AllStrings.space);
         if (replaceDoubleSpaceForSingle)
-        {
             result = result.Replace("\"", "'"); //SHReplace.ReplaceAllDoubleSpaceToSingle(result, true);
-        }
         return result;
     }
 
     public static string TrimStartAndEnd(string target, Func<char, bool> startAllowed, Func<char, bool> endAllowed)
     {
-        for (int i = 0; i < target.Length; i++)
-        {
+        for (var i = 0; i < target.Length; i++)
             if (!startAllowed.Invoke(target[i]))
             {
                 target = target.Substring(1);
@@ -72,20 +56,12 @@ public class SHTrim //: SHData
             {
                 break;
             }
-        }
 
-        for (int i = target.Length - 1; i >= 0; i--)
-        {
+        for (var i = target.Length - 1; i >= 0; i--)
             if (!startAllowed.Invoke(target[i]))
-            {
                 target = target.Remove(target.Length - 1, 1);
-
-            }
             else
-            {
                 break;
-            }
-        }
         return target;
     }
 
@@ -107,10 +83,7 @@ public class SHTrim //: SHData
     /// <returns></returns>
     public static string TrimStart(string v, string s)
     {
-        while (v.StartsWith(s))
-        {
-            v = v.Substring(s.Length);
-        }
+        while (v.StartsWith(s)) v = v.Substring(s.Length);
 
         return v;
     }
@@ -127,13 +100,16 @@ public class SHTrim //: SHData
             s = s.Substring(p.Length);
             return true;
         }
+
         return false;
     }
+
     public static string TrimEnd(string name, string ext)
     {
         while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
         return name;
     }
+
     public static string TrimStartAndEnd(string v, string s, string e)
     {
         v = TrimEnd(v, e);
@@ -143,7 +119,7 @@ public class SHTrim //: SHData
     }
 
     /// <summary>
-    /// Trim from beginning and end of A1 substring A2
+    ///     Trim from beginning and end of A1 substring A2
     /// </summary>
     /// <param name="s"></param>
     /// <param name="args"></param>
@@ -162,70 +138,61 @@ public class SHTrim //: SHData
 
     public static string TrimLeadingNumbersAtStart(string nameSolution)
     {
-        for (int i = 0; i < nameSolution.Length; i++)
+        for (var i = 0; i < nameSolution.Length; i++)
         {
-            bool replace = false;
-            for (int n = 0; n < 10; n++)
-            {
+            var replace = false;
+            for (var n = 0; n < 10; n++)
                 if (nameSolution[i] == n.ToString()[0])
                 {
                     replace = true;
                     nameSolution = nameSolution.Substring(1);
                     break;
                 }
-            }
-            if (!replace)
-            {
-                return nameSolution;
-            }
+
+            if (!replace) return nameSolution;
         }
+
         return nameSolution;
     }
 
     public static string TrimTrailingNumbersAtEnd(string nameSolution)
     {
-        for (int i = nameSolution.Length - 1; i >= 0; i--)
+        for (var i = nameSolution.Length - 1; i >= 0; i--)
         {
-            bool replace = false;
-            for (int n = 0; n < 10; n++)
-            {
+            var replace = false;
+            for (var n = 0; n < 10; n++)
                 if (nameSolution[i] == n.ToString()[0])
                 {
                     replace = true;
                     nameSolution = nameSolution.Substring(0, nameSolution.Length - 1);
                     break;
                 }
-            }
-            if (!replace)
-            {
-                return nameSolution;
-            }
+
+            if (!replace) return nameSolution;
         }
+
         return nameSolution;
     }
 
 
-
     public static string TrimNumbersAtEnd(string nameSolution)
     {
-        for (int i = nameSolution.Length - 1; i >= 0; i--)
+        for (var i = nameSolution.Length - 1; i >= 0; i--)
         {
-            bool replace = false;
-            for (int n = 0; n < 10; n++)
-            {
+            var replace = false;
+            for (var n = 0; n < 10; n++)
                 if (nameSolution[i] == n.ToString()[0])
                 {
                     replace = true;
-                    nameSolution = nameSolution.Length > 0 ? nameSolution.Substring(0, nameSolution.Length - 1) : string.Empty;
+                    nameSolution = nameSolution.Length > 0
+                        ? nameSolution.Substring(0, nameSolution.Length - 1)
+                        : string.Empty;
                     break;
                 }
-            }
 
-            if (!replace)
-            {
-                return nameSolution;
-            }
+            if (!replace) return nameSolution;
         }
+
         return nameSolution;
     }
 }

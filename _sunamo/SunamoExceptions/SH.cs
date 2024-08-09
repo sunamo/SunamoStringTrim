@@ -18,6 +18,7 @@ internal class SH
         var sb = nazevPP.Substring(1);
         return nazevPP[0].ToString().ToLower() + sb;
     }
+
     /// <summary>
     ///     Convert \r\n to NewLine etc.
     /// </summary>
@@ -36,8 +37,10 @@ internal class SH
             case "\\t":
                 return "\t";
         }
+
         return delimiter;
     }
+
     /// <summary>
     ///     Musí tu být. split z .net vrací []
     ///     krom toho je instanční. musel bych měnit hodně kódu kvůli toho
@@ -50,14 +53,17 @@ internal class SH
     {
         return s.Split(dot, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
+
     internal static List<string> SplitMore(string s, params string[] dot)
     {
         return s.Split(dot, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
+
     internal static List<string> SplitNone(string text, params string[] deli)
     {
         return text.Split(deli, StringSplitOptions.None).ToList();
     }
+
     /// <summary>
     ///     Usage: BadFormatOfElementInList
     ///     If null, return Consts.nulled
@@ -73,6 +79,7 @@ internal class SH
         return null;
         //return n == null ? " " + Consts.nulled : AllStrings.space + v.ToString();
     }
+
     /// <summary>
     ///     Usage: BadFormatOfElementInList
     ///     If null, return Consts.nulled
@@ -85,6 +92,7 @@ internal class SH
         //return NullToStringOrDefault(n, null);
         return n == null ? " " + Consts.nulled : AllStrings.space + n;
     }
+
     /// <summary>
     ///     Usage: Exceptions.MoreCandidates
     ///     není v .net (pouze char), přes split to taky nedává smysl (dá se to udělat i s .net ale bude to pomalejší)
@@ -97,5 +105,4 @@ internal class SH
         while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
         return name;
     }
-
 }
