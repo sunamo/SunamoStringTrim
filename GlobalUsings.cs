@@ -10,6 +10,4 @@ global using SunamoStringTrim._sunamo.SunamoExceptions;
 global using System.Diagnostics;
 global using System.Reflection;
 global using System.Net;
-global using SunamoStringTrim;
 global using SunamoStringTrim._sunamo;
-global using SunamoStringTrim._sunamo.SunamoStringGetLines;
