@@ -1,5 +1,6 @@
 namespace SunamoStringTrim;
-// //: SHData mi způsobilo chyby Reference to type '' claims it is defined in '', but it could not be found. důvod byl jednoduchý, původně jsem chtěl dědit z SHSE který bude dědit z SHData. Pak jsem to ale obrátil. Neměl jsem zkompilované nové SunamoStringData ve kterém nebylo SunExc a VS sice ví kde hledaná třída je ale neřekne přímo ten problém. Proto to vše bylo takové matoucí.
+
+// //: SHData mi způsobilo chyby Reference to type ' ' claims it is defined in ' ', but it could not be found. důvod byl jednoduchý, původně jsem chtěl dědit z SHSE který bude dědit z SHData. Pak jsem to ale obrátil. Neměl jsem zkompilované nové SunamoStringData ve kterém nebylo SunExc a VS sice ví kde hledaná třída je ale neřekne přímo ten problém. Proto to vše bylo takové matoucí.
 public class SHTrim //: SHData
 {
     public static string TrimStartingAndTrailingChars(string html, out StringBuilder fromStart,
@@ -36,8 +37,8 @@ public class SHTrim //: SHData
 
     public static string TrimNewLineAndTab(string lyricsFirstOriginal, bool replaceDoubleSpaceForSingle = false)
     {
-        var result = lyricsFirstOriginal.Replace("\t", AllStrings.space).Replace("\r", AllStrings.space)
-            .Replace("\n", AllStrings.space).Replace(AllStrings.doubleSpace, AllStrings.space);
+        var result = lyricsFirstOriginal.Replace("\t", "").Replace("\r", "")
+            .Replace("\n", "").Replace("", "");
         if (replaceDoubleSpaceForSingle)
             result = result.Replace("\"", "'"); //SHReplace.ReplaceAllDoubleSpaceToSingle(result, true);
         return result;
@@ -66,12 +67,12 @@ public class SHTrim //: SHData
 
     public static string TrimEndSpaces(string v)
     {
-        return v.TrimEnd(AllChars.space);
+        return v.TrimEnd(' ');
     }
 
     public static string TrimBrackets(string ratingCount)
     {
-        return ratingCount.TrimStart(AllChars.lb).TrimEnd(AllChars.rb);
+        return ratingCount.TrimStart('(').TrimEnd(')');
     }
 
     /// <summary>
@@ -89,7 +90,8 @@ public class SHTrim //: SHData
 
     public static string TrimEnd(string name)
     {
-        return name.TrimEnd(AllChars.whiteSpacesChars.ToArray());
+        WhitespaceCharService whitespaceChar = new();
+        return name.TrimEnd(whitespaceChar.whiteSpaceChars.ToArray());
     }
 
     public static bool TrimIfStartsWith(ref string s, string p)
@@ -132,7 +134,7 @@ public class SHTrim //: SHData
 
     public static string AdvancedTrim(string p)
     {
-        return p.Replace(AllStrings.doubleSpace, AllStrings.space).Trim();
+        return p.Replace("", "").Trim();
     }
 
     public static string TrimLeadingNumbersAtStart(string nameSolution)

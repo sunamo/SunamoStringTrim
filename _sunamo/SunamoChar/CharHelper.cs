@@ -1,5 +1,6 @@
 namespace SunamoStringTrim._sunamo.SunamoChar;
 
+
 internal class CharHelper
 {
     internal static List<string> SplitSpecial(string text, params char[] deli)
@@ -39,9 +40,10 @@ internal class CharHelper
             else
                 splitted.Add(text);
             Predicate<char> predicate;
+            GeneralCharService generalChar = new();
             foreach (var genericChar in generic)
             {
-                predicate = AllChars.ReturnRightPredicate(genericChar);
+                predicate = generalChar.ReturnRightPredicate(genericChar);
                 var splittedPart = new List<string>();
                 for (var i = splitted.Count() - 1; i >= 0; i--)
                 {
@@ -93,9 +95,9 @@ internal class CharHelper
 
     private static bool IsSpecialChar(char ch, ref string s, int dx = -1, bool immediatelyRemove = false)
     {
-        if (ch == AllChars.lb || ch == AllChars.rb) return false;
-        if (ch == '\\' || ch == AllChars.lcub || ch == AllChars.rcub) return false;
-        if (ch == AllChars.dash) return true;
+        if (ch == '(' || ch == ')') return false;
+        if (ch == '\\' || ch == '{' || ch == '}') return false;
+        if (ch == '-') return true;
         if (char.IsWhiteSpace(ch))
         {
             if (immediatelyRemove && s != null) s = s.Remove(dx, 1);
@@ -188,8 +190,10 @@ internal class CharHelper
 
     internal static bool IsSpecial(char c)
     {
-        var v = AllChars.specialChars.Contains(c);
-        if (!v) v = AllChars.specialChars2.Contains(c);
+        SpecialCharsService specialChars = new();
+
+        var v = specialChars.specialChars.Contains(c);
+        if (!v) v = specialChars.specialChars2.Contains(c);
         return v;
     }
 
@@ -200,7 +204,8 @@ internal class CharHelper
 
     internal static bool IsGeneric(char c)
     {
-        return AllChars.generalChars.Contains(c);
+        GeneralCharService generalChar = new();
+        return generalChar.generalChars.Contains(c);
     }
 
     internal static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
@@ -222,12 +227,12 @@ internal class CharHelper
         var sb = new StringBuilder();
         //bool result = true;
         foreach (var item in v)
-        foreach (var item2 in isDigit)
-            if (item2.Invoke(item))
-            {
-                sb.Append(item);
-                break;
-            }
+            foreach (var item2 in isDigit)
+                if (item2.Invoke(item))
+                {
+                    sb.Append(item);
+                    break;
+                }
 
         return sb.ToString();
     }
