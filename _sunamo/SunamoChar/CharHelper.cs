@@ -3,15 +3,7 @@ namespace SunamoStringTrim._sunamo.SunamoChar;
 
 internal class CharHelper
 {
-    internal static List<string> SplitSpecial(string text, params char[] deli)
-    {
-        return SplitSpecial(StringSplitOptions.RemoveEmptyEntries, text, deli);
-    }
 
-    internal static List<string> SplitSpecialNone(string text, params char[] deli)
-    {
-        return SplitSpecial(StringSplitOptions.None, text, deli);
-    }
 
     /// <summary>
     ///     Use with general letters
@@ -113,12 +105,6 @@ internal class CharHelper
         return false;
     }
 
-    internal static List<UnicodeChars> TypesOfUnicodeChars(string s)
-    {
-        var ch = new List<UnicodeChars>();
-        foreach (var item in s) ch.Add(IsUnicodeChar(item));
-        return ch.Distinct().ToList();
-    }
 
     internal static UnicodeChars IsUnicodeChar(char ch)
     {
@@ -197,10 +183,6 @@ internal class CharHelper
         return v;
     }
 
-    internal static string OnlyDigits(string v)
-    {
-        return OnlyAccepted(v, char.IsDigit);
-    }
 
     internal static bool IsGeneric(char c)
     {
@@ -222,18 +204,4 @@ internal class CharHelper
         return sb.ToString();
     }
 
-    internal static string OnlyAccepted(string v, List<Func<char, bool>> isDigit, bool not = false)
-    {
-        var sb = new StringBuilder();
-        //bool result = true;
-        foreach (var item in v)
-            foreach (var item2 in isDigit)
-                if (item2.Invoke(item))
-                {
-                    sb.Append(item);
-                    break;
-                }
-
-        return sb.ToString();
-    }
 }
