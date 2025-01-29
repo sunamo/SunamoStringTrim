@@ -41,21 +41,8 @@ internal class CharHelper
 
 
 
-    internal static bool IsSpecial(char c)
-    {
-        SpecialCharsService specialChars = new();
-
-        var v = specialChars.specialChars.Contains(c);
-        if (!v) v = specialChars.specialChars2.Contains(c);
-        return v;
-    }
 
 
-    internal static bool IsGeneric(char c)
-    {
-        GeneralCharService generalChar = new();
-        return generalChar.generalChars.Contains(c);
-    }
 
 
 }
