@@ -5,74 +5,7 @@ internal class CharHelper
 {
 
 
-    /// <summary>
-    ///     Use with general letters
-    /// </summary>
-    /// <param name="stringSplitOptions"></param>
-    /// <param name="text"></param>
-    /// <param name="deli"></param>
-    private static List<string> SplitSpecial(StringSplitOptions stringSplitOptions, string text, params char[] deli)
-    {
-        if (deli == null || deli.Count() == 0) throw new Exception("NoDelimiterDetermined");
-        if (deli.Length == 1 && !IsUnicodeChar(UnicodeChars.Generic, deli[0]))
-            return text.Split(deli, stringSplitOptions).ToList();
-
-        var normal = new List<char>();
-        var generic = new List<char>();
-        foreach (var item in deli)
-            if (IsUnicodeChar(UnicodeChars.Generic, item))
-                generic.Add(item);
-            else
-                normal.Add(item);
-        if (generic.Count > 0)
-        {
-            var splitted = new List<string>();
-            if (normal.Count > 0)
-                splitted.AddRange(text.Split(normal.ToArray(), stringSplitOptions).ToList());
-            else
-                splitted.Add(text);
-            Predicate<char> predicate;
-            GeneralCharService generalChar = new();
-            foreach (var genericChar in generic)
-            {
-                predicate = generalChar.ReturnRightPredicate(genericChar);
-                var splittedPart = new List<string>();
-                for (var i = splitted.Count() - 1; i >= 0; i--)
-                {
-                    var item2 = splitted[i];
-                    splittedPart.Clear();
-                    var sb = new StringBuilder();
-                    foreach (var item in item2)
-                        if (predicate.Invoke(item))
-                        {
-                            sb.Append(item);
-                        }
-                        else
-                        {
-                            if (sb.Length != 0)
-                            {
-                                splittedPart.Add(sb.ToString());
-                                sb.Clear();
-                            }
-                        }
-
-                    var splittedPartCount = splittedPart.Count();
-                    if (splittedPartCount > 1)
-                    {
-                        splitted.RemoveAt(i);
-                        for (var y = splittedPartCount - 1; y >= 0; y--) splitted.Insert(i, splittedPart[y]);
-                    }
-
-                    splitted.Add(sb.ToString());
-                }
-            }
-
-            return splitted.ToList();
-        }
-
-        return text.Split(deli, stringSplitOptions).ToList();
-    }
-
+    
     /// <summary>
     ///     Return whether is whitespace or punctaction
     /// </summary>
@@ -106,37 +39,6 @@ internal class CharHelper
     }
 
 
-    internal static UnicodeChars IsUnicodeChar(char ch)
-    {
-        if (char.IsControl(ch))
-            return UnicodeChars.Control;
-        if (char.IsHighSurrogate(ch))
-            return UnicodeChars.HighSurrogate;
-        if (char.IsLower(ch))
-            return UnicodeChars.Lower;
-        if (char.IsLowSurrogate(ch))
-            return UnicodeChars.LowSurrogate;
-        if (char.IsNumber(ch))
-            return UnicodeChars.Number;
-        if (char.IsPunctuation(ch))
-            return UnicodeChars.Punctaction;
-        if (char.IsSeparator(ch))
-            return UnicodeChars.Separator;
-        if (char.IsSurrogate(ch))
-            return UnicodeChars.Surrogate;
-        if (char.IsSymbol(ch))
-            return UnicodeChars.Symbol;
-        if (char.IsUpper(ch))
-            return UnicodeChars.Upper;
-        if (char.IsWhiteSpace(ch))
-            return UnicodeChars.WhiteSpace;
-        if (IsSpecial(ch))
-            return UnicodeChars.Special;
-        if (IsGeneric(ch)) return UnicodeChars.Generic;
-        //ThrowEx.NotImplementedCase(ch);
-        // Still was throwing NotImplementedCase for 㣯 => Special. not all chars catch all ifs
-        return UnicodeChars.Special;
-    }
 
     internal static bool IsUnicodeChar(UnicodeChars generic, char c)
     {
@@ -190,18 +92,5 @@ internal class CharHelper
         return generalChar.generalChars.Contains(c);
     }
 
-    internal static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
-    {
-        var sb = new StringBuilder();
-        var result = false;
-        foreach (var item in v)
-        {
-            result = isDigit.Invoke(item);
-            if (not) result = !result;
-            if (result) sb.Append(item);
-        }
-
-        return sb.ToString();
-    }
 
 }
