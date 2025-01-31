@@ -4,9 +4,7 @@ internal sealed partial class Exceptions
 {
     #region Other
 
-    internal static Tuple<string, string, string> PlaceOfException(
-bool fillAlsoFirstTwo = true)
-{}    internal static void TypeAndMethodName(string l, out string type, out string methodName)
+internal static void TypeAndMethodName(string l, out string type, out string methodName)
     {
         var s2 = l.Split("at ")[1].Trim();
         var s = s2.Split("(")[0];
