@@ -14,3 +14,7 @@ global using SunamoStringTrim._sunamo;
 global using System.Diagnostics.CodeAnalysis;
 global using SunamoStringTrim;
 global using SunamoStringTrim._sunamo.SunamoStringData;
+
+global using ILogger = Microsoft.Extensions.Logging.ILogger;
+global using Microsoft.Extensions.Logging;
+global using NullLogger = Microsoft.Extensions.Logging.Abstractions.NullLogger;
