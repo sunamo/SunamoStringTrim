@@ -58,7 +58,7 @@ public class SHTrim //: SHData
             }
 
         for (var i = target.Length - 1; i >= 0; i--)
-            if (!startAllowed.Invoke(target[i]))
+            if (!endAllowed.Invoke(target[i]))
                 target = target.Remove(target.Length - 1, 1);
             else
                 break;
