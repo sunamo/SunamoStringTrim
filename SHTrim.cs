@@ -156,27 +156,8 @@ public class SHTrim //: SHData
         return nameSolution;
     }
 
+
     public static string TrimTrailingNumbersAtEnd(string nameSolution)
-    {
-        for (var i = nameSolution.Length - 1; i >= 0; i--)
-        {
-            var replace = false;
-            for (var n = 0; n < 10; n++)
-                if (nameSolution[i] == n.ToString()[0])
-                {
-                    replace = true;
-                    nameSolution = nameSolution.Substring(0, nameSolution.Length - 1);
-                    break;
-                }
-
-            if (!replace) return nameSolution;
-        }
-
-        return nameSolution;
-    }
-
-
-    public static string TrimNumbersAtEnd(string nameSolution)
     {
         for (var i = nameSolution.Length - 1; i >= 0; i--)
         {
