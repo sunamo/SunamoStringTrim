@@ -1,3 +1,6 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoStringTrim;
 
 // //: SHData mi způsobilo chyby Reference to type ' ' claims it is defined in ' ', but it could not be found. důvod byl jednoduchý, původně jsem chtěl dědit z SHSE který bude dědit z SHData. Pak jsem to ale obrátil. Neměl jsem zkompilované nové SunamoStringData ve kterém nebylo SunExc a VS sice ví kde hledaná třída je ale neřekne přímo ten problém. Proto to vše bylo takové matoucí.
@@ -81,9 +84,9 @@ public class SHTrim //: SHData
     /// <param name="v"></param>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string TrimStart(string v, string s)
+    public static string TrimStart(string v, string text)
     {
-        while (v.StartsWith(s)) v = v.Substring(s.Length);
+        while (v.StartsWith(text)) v = v.Substring(text.Length);
 
         return v;
     }
@@ -94,11 +97,11 @@ public class SHTrim //: SHData
         return name.TrimEnd(whitespaceChar.whiteSpaceChars.ToArray());
     }
 
-    public static bool TrimIfStartsWith(ref string s, string p)
+    public static bool TrimIfStartsWith(ref string text, string p)
     {
-        if (s.StartsWith(p))
+        if (text.StartsWith(p))
         {
-            s = s.Substring(p.Length);
+            text = text.Substring(p.Length);
             return true;
         }
 
@@ -111,10 +114,10 @@ public class SHTrim //: SHData
         return name;
     }
 
-    public static string TrimStartAndEnd(string v, string s, string e)
+    public static string TrimStartAndEnd(string v, string text, string e)
     {
         v = TrimEnd(v, e);
-        v = TrimStart(v, s);
+        v = TrimStart(v, text);
 
         return v;
     }
@@ -124,12 +127,12 @@ public class SHTrim //: SHData
     /// </summary>
     /// <param name="s"></param>
     /// <param name="args"></param>
-    public static string Trim(string s, string args)
+    public static string Trim(string text, string args)
     {
-        s = TrimStart(s, args);
-        s = TrimEnd(s, args);
+        text = TrimStart(text, args);
+        text = TrimEnd(text, args);
 
-        return s;
+        return text;
     }
 
     public static string AdvancedTrim(string p)
@@ -142,8 +145,8 @@ public class SHTrim //: SHData
         for (var i = 0; i < nameSolution.Length; i++)
         {
             var replace = false;
-            for (var n = 0; n < 10; n++)
-                if (nameSolution[i] == n.ToString()[0])
+            for (var name = 0; name < 10; name++)
+                if (nameSolution[i] == name.ToString()[0])
                 {
                     replace = true;
                     nameSolution = nameSolution.Substring(1);
@@ -162,8 +165,8 @@ public class SHTrim //: SHData
         for (var i = nameSolution.Length - 1; i >= 0; i--)
         {
             var replace = false;
-            for (var n = 0; n < 10; n++)
-                if (nameSolution[i] == n.ToString()[0])
+            for (var name = 0; name < 10; name++)
+                if (nameSolution[i] == name.ToString()[0])
                 {
                     replace = true;
                     nameSolution = nameSolution.Length > 0
