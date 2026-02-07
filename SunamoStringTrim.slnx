@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="SunamoStringTrim.Tests\\SunamoStringTrim.Tests.csproj" />
+  <Project Path="RunnerStringTrim\\RunnerStringTrim.csproj" />
+  <Project Path="SunamoStringTrim\SunamoStringTrim.csproj" />
+</Solution>
