@@ -1,55 +1,83 @@
 namespace SunamoStringTrim;
 
-// //: SHData mi způsobilo chyby Reference to type ' ' claims it is defined in ' ', but it could not be found. důvod byl jednoduchý, původně jsem chtěl dědit z SHSE který bude dědit z SHData. Pak jsem to ale obrátil. Neměl jsem zkompilované nové SunamoStringData ve kterém nebylo SunExc a VS sice ví kde hledaná třída je ale neřekne přímo ten problém. Proto to vše bylo takové matoucí.
-public class SHTrim //: SHData
+/// <summary>
+/// Provides methods for trimming strings in various ways (whitespace, special characters, brackets, numbers, etc.).
+/// </summary>
+public class SHTrim
 {
-    public static string TrimStartingAndTrailingChars(string html, out StringBuilder fromStart,
+    /// <summary>
+    /// Trims special characters (whitespace and punctuation) from the start and end of the string,
+    /// collecting removed characters into separate StringBuilders.
+    /// </summary>
+    /// <param name="text">The input string to trim.</param>
+    /// <param name="fromStart">Outputs the special characters removed from the start.</param>
+    /// <param name="fromEnd">Outputs the special characters removed from the end.</param>
+    /// <returns>The trimmed string with special characters removed.</returns>
+    public static string TrimStartingAndTrailingChars(string text, out StringBuilder fromStart,
         out StringBuilder fromEnd)
     {
         fromStart = new StringBuilder();
         fromEnd = new StringBuilder();
-        var specialChar = 'a';
+        var specialCharacter = 'a';
 
-        for (var i = 0; i < html.Length; i++)
-            if (CharHelper.IsSpecialChar(i, ref html, ref specialChar, true))
-                fromStart.Append(specialChar);
+        for (var i = 0; i < text.Length; i++)
+            if (CharHelper.IsSpecialChar(i, ref text, ref specialCharacter, true))
+                fromStart.Append(specialCharacter);
             else
                 break;
 
-        for (var i = html.Length - 1; i >= 0; i--)
-            if (CharHelper.IsSpecialChar(i, ref html, ref specialChar, true))
-                fromEnd.Insert(0, specialChar);
+        for (var i = text.Length - 1; i >= 0; i--)
+            if (CharHelper.IsSpecialChar(i, ref text, ref specialCharacter, true))
+                fromEnd.Insert(0, specialCharacter);
             else
                 break;
 
-        return html;
+        return text;
     }
 
     /// <summary>
-    ///     Vrátí SE když A1 bude null, pokud null nebude, trimuje ho
+    /// Returns an empty string when input is null; otherwise trims whitespace from the input.
     /// </summary>
-    /// <param name="p"></param>
-    public static string TrimIsNotNull(string p)
+    /// <param name="text">The input string to trim, or null.</param>
+    /// <returns>The trimmed string, or an empty string if input is null.</returns>
+    public static string TrimIsNotNull(string text)
     {
-        if (p != null) return p.Trim();
+        if (text != null) return text.Trim();
         return "";
     }
 
-    public static string TrimNewLineAndTab(string lyricsFirstOriginal, bool replaceDoubleSpaceForSingle = false)
+    /// <summary>
+    /// Removes tab, carriage return, newline, and non-breaking space characters from the string.
+    /// Optionally replaces double quotes with single quotes.
+    /// </summary>
+    /// <param name="text">The input string to clean.</param>
+    /// <param name="isReplacingDoubleQuotes">If true, replaces double quotes with single quotes.</param>
+    /// <returns>The cleaned string.</returns>
+    public static string TrimNewLineAndTab(string text, bool isReplacingDoubleQuotes = false)
     {
-        var result = lyricsFirstOriginal.Replace("\t", "").Replace("\r", "")
-            .Replace("\n", "").Replace(" ", "");
-        if (replaceDoubleSpaceForSingle)
-            result = result.Replace("\"", "'"); //SHReplace.ReplaceAllDoubleSpaceToSingle(result, true);
+        var result = text.Replace("\t", "").Replace("\r", "")
+            .Replace("\n", "").Replace("\u00A0", "");
+        if (isReplacingDoubleQuotes)
+            result = result.Replace("\"", "'");
         return result;
     }
 
-    public static string TrimStartAndEnd(string target, Func<char, bool> startAllowed, Func<char, bool> endAllowed)
+    /// <summary>
+    /// Trims characters from the start and end of the string using custom predicate functions.
+    /// Characters are removed from the start while <paramref name="isStartAllowed"/> returns false,
+    /// and from the end while <paramref name="isEndAllowed"/> returns false.
+    /// </summary>
+    /// <param name="text">The string to trim.</param>
+    /// <param name="isStartAllowed">Predicate that returns true when a start character should be kept.</param>
+    /// <param name="isEndAllowed">Predicate that returns true when an end character should be kept.</param>
+    /// <returns>The trimmed string.</returns>
+    public static string TrimStartAndEnd(string text, Func<char, bool> isStartAllowed,
+        Func<char, bool> isEndAllowed)
     {
-        for (var i = 0; i < target.Length; i++)
-            if (!startAllowed.Invoke(target[i]))
+        for (var i = 0; i < text.Length; i++)
+            if (!isStartAllowed.Invoke(text[i]))
             {
-                target = target.Substring(1);
+                text = text.Substring(1);
                 i--;
             }
             else
@@ -57,124 +85,149 @@ public class SHTrim //: SHData
                 break;
             }
 
-        for (var i = target.Length - 1; i >= 0; i--)
-            if (!endAllowed.Invoke(target[i]))
-                target = target.Remove(target.Length - 1, 1);
+        for (var i = text.Length - 1; i >= 0; i--)
+            if (!isEndAllowed.Invoke(text[i]))
+                text = text.Remove(text.Length - 1, 1);
             else
                 break;
-        return target;
-    }
-
-    public static string TrimEndSpaces(string v)
-    {
-        return v.TrimEnd(' ');
-    }
-
-    public static string TrimBrackets(string ratingCount)
-    {
-        return ratingCount.TrimStart('(').TrimEnd(')');
+        return text;
     }
 
     /// <summary>
-    ///     Usage: Exceptions.TypeAndMethodName
+    /// Trims trailing spaces from the end of the string.
     /// </summary>
-    /// <param name="v"></param>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string TrimStart(string v, string text)
+    /// <param name="text">The string to trim.</param>
+    /// <returns>The string with trailing spaces removed.</returns>
+    public static string TrimEndSpaces(string text)
     {
-        while (v.StartsWith(text)) v = v.Substring(text.Length);
-
-        return v;
+        return text.TrimEnd(' ');
     }
 
-    public static string TrimEnd(string name)
+    /// <summary>
+    /// Trims leading '(' and trailing ')' from the string.
+    /// </summary>
+    /// <param name="text">The string to trim.</param>
+    /// <returns>The string with surrounding parentheses removed.</returns>
+    public static string TrimBrackets(string text)
     {
-        WhitespaceCharService whitespaceChar = new();
-        return name.TrimEnd(whitespaceChar.whiteSpaceChars.ToArray());
+        return text.TrimStart('(').TrimEnd(')');
     }
 
-    public static bool TrimIfStartsWith(ref string text, string p)
+    /// <summary>
+    /// Trims the specified prefix from the start of the string, repeatedly if it occurs multiple times.
+    /// </summary>
+    /// <param name="text">The string to trim.</param>
+    /// <param name="prefix">The prefix to remove from the start.</param>
+    /// <returns>The string with the prefix removed.</returns>
+    public static string TrimStart(string text, string prefix)
     {
-        if (text.StartsWith(p))
+        while (text.StartsWith(prefix)) text = text.Substring(prefix.Length);
+
+        return text;
+    }
+
+    /// <summary>
+    /// Trims all trailing whitespace characters (including Unicode whitespace) from the string.
+    /// </summary>
+    /// <param name="text">The string to trim.</param>
+    /// <returns>The string with trailing whitespace removed.</returns>
+    public static string TrimEnd(string text)
+    {
+        WhitespaceCharService whitespaceCharService = new();
+        return text.TrimEnd(whitespaceCharService.WhiteSpaceChars.ToArray());
+    }
+
+    /// <summary>
+    /// If the string starts with the specified prefix, removes it and returns true; otherwise returns false.
+    /// </summary>
+    /// <param name="text">The string to check and modify.</param>
+    /// <param name="prefix">The prefix to look for and remove.</param>
+    /// <returns>True if the prefix was found and removed; otherwise, false.</returns>
+    public static bool TrimIfStartsWith(ref string text, string prefix)
+    {
+        if (text.StartsWith(prefix))
         {
-            text = text.Substring(p.Length);
+            text = text.Substring(prefix.Length);
             return true;
         }
 
         return false;
     }
 
-    public static string TrimEnd(string name, string ext)
+    /// <summary>
+    /// Trims the specified suffix from the end of the string.
+    /// </summary>
+    /// <param name="text">The string to trim.</param>
+    /// <param name="suffix">The suffix to remove from the end.</param>
+    /// <returns>The string with the suffix removed.</returns>
+    public static string TrimEnd(string text, string suffix)
     {
-        while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
-        return name;
-    }
-
-    public static string TrimStartAndEnd(string v, string text, string e)
-    {
-        v = TrimEnd(v, e);
-        v = TrimStart(v, text);
-
-        return v;
+        while (text.EndsWith(suffix)) text = text.Substring(0, text.Length - suffix.Length);
+        return text;
     }
 
     /// <summary>
-    ///     Trim from beginning and end of A1 substring A2
+    /// Trims the specified prefix from the start and suffix from the end of the string.
     /// </summary>
-    /// <param name="s"></param>
-    /// <param name="args"></param>
-    public static string Trim(string text, string args)
+    /// <param name="text">The string to trim.</param>
+    /// <param name="prefix">The prefix to remove from the start.</param>
+    /// <param name="suffix">The suffix to remove from the end.</param>
+    /// <returns>The string with prefix and suffix removed.</returns>
+    public static string TrimStartAndEnd(string text, string prefix, string suffix)
     {
-        text = TrimStart(text, args);
-        text = TrimEnd(text, args);
+        text = TrimEnd(text, suffix);
+        text = TrimStart(text, prefix);
 
         return text;
     }
 
-    public static string AdvancedTrim(string p)
+    /// <summary>
+    /// Trims the specified substring from both the beginning and end of the string.
+    /// </summary>
+    /// <param name="text">The string to trim.</param>
+    /// <param name="trimText">The substring to remove from both ends.</param>
+    /// <returns>The trimmed string.</returns>
+    public static string Trim(string text, string trimText)
     {
-        return p.Replace(" ", "").Trim();
+        text = TrimStart(text, trimText);
+        text = TrimEnd(text, trimText);
+
+        return text;
     }
 
-    public static string TrimLeadingNumbersAtStart(string nameSolution)
+    /// <summary>
+    /// Removes all non-breaking spaces and then trims standard whitespace from the string.
+    /// </summary>
+    /// <param name="text">The string to trim.</param>
+    /// <returns>The cleaned and trimmed string.</returns>
+    public static string AdvancedTrim(string text)
     {
-        for (var i = 0; i < nameSolution.Length; i++)
-        {
-            var replace = false;
-            for (var name = 0; name < 10; name++)
-                if (nameSolution[i] == name.ToString()[0])
-                {
-                    replace = true;
-                    nameSolution = nameSolution.Substring(1);
-                    break;
-                }
-
-            if (!replace) return nameSolution;
-        }
-
-        return nameSolution;
+        return text.Replace("\u00A0", "").Trim();
     }
 
-
-    public static string TrimTrailingNumbersAtEnd(string nameSolution)
+    /// <summary>
+    /// Removes leading numeric characters from the start of the string.
+    /// </summary>
+    /// <param name="text">The string to process.</param>
+    /// <returns>The string with leading numbers removed.</returns>
+    public static string TrimLeadingNumbersAtStart(string text)
     {
-        for (var i = nameSolution.Length - 1; i >= 0; i--)
-        {
-            var replace = false;
-            for (var name = 0; name < 10; name++)
-                if (nameSolution[i] == name.ToString()[0])
-                {
-                    replace = true;
-                    nameSolution = nameSolution.Length > 0
-                        ? nameSolution.Substring(0, nameSolution.Length - 1)
-                        : string.Empty;
-                    break;
-                }
+        while (text.Length > 0 && char.IsDigit(text[0]))
+            text = text.Substring(1);
 
-            if (!replace) return nameSolution;
-        }
+        return text;
+    }
 
-        return nameSolution;
+    /// <summary>
+    /// Removes trailing numeric characters from the end of the string.
+    /// </summary>
+    /// <param name="text">The string to process.</param>
+    /// <returns>The string with trailing numbers removed.</returns>
+    public static string TrimTrailingNumbersAtEnd(string text)
+    {
+        while (text.Length > 0 && char.IsDigit(text[text.Length - 1]))
+            text = text.Substring(0, text.Length - 1);
+
+        return text;
     }
 }

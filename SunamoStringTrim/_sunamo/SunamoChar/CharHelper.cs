@@ -1,47 +1,52 @@
 namespace SunamoStringTrim._sunamo.SunamoChar;
 
+/// <summary>
+/// Helper class for character classification (whitespace, punctuation, special characters).
+/// </summary>
 internal class CharHelper
 {
-
-
-    
     /// <summary>
-    ///     Return whether is whitespace or punctaction
+    /// Determines whether the character at the specified index is a special character (whitespace or punctuation).
     /// </summary>
-    /// <param name="dx"></param>
-    /// <param name="s"></param>
-    /// <param name="ch"></param>
-    internal static bool IsSpecialChar(int dx, ref string s, ref char ch, bool immediatelyRemove = false)
+    /// <param name="index">The index of the character to check.</param>
+    /// <param name="text">The source string, which may be modified if immediate removal is enabled.</param>
+    /// <param name="character">Outputs the character found at the specified index.</param>
+    /// <param name="isImmediatelyRemoving">If true, removes the character from the string when it is special.</param>
+    /// <returns>True if the character is a special character; otherwise, false.</returns>
+    internal static bool IsSpecialChar(int index, ref string text, ref char character,
+        bool isImmediatelyRemoving = false)
     {
-        ch = s[dx];
-        return IsSpecialChar(ch, ref s, dx, immediatelyRemove);
+        character = text[index];
+        return IsSpecialChar(character, ref text, index, isImmediatelyRemoving);
     }
 
-    private static bool IsSpecialChar(char ch, ref string s, int dx = -1, bool immediatelyRemove = false)
+    /// <summary>
+    /// Determines whether the specified character is a special character (whitespace or punctuation),
+    /// excluding parentheses, backslash, and curly braces.
+    /// </summary>
+    /// <param name="character">The character to check.</param>
+    /// <param name="text">The source string, which may be modified if immediate removal is enabled.</param>
+    /// <param name="index">The index of the character in the string. Required when immediate removal is enabled.</param>
+    /// <param name="isImmediatelyRemoving">If true, removes the character from the string when it is special.</param>
+    /// <returns>True if the character is a special character; otherwise, false.</returns>
+    private static bool IsSpecialChar(char character, ref string text, int index = -1,
+        bool isImmediatelyRemoving = false)
     {
-        if (ch == '(' || ch == ')') return false;
-        if (ch == '\\' || ch == '{' || ch == '}') return false;
-        if (ch == '-') return true;
-        if (char.IsWhiteSpace(ch))
+        if (character == '(' || character == ')') return false;
+        if (character == '\\' || character == '{' || character == '}') return false;
+        if (character == '-') return true;
+        if (char.IsWhiteSpace(character))
         {
-            if (immediatelyRemove && s != null) s = s.Remove(dx, 1);
+            if (isImmediatelyRemoving && text != null) text = text.Remove(index, 1);
             return true;
         }
 
-        if (char.IsPunctuation(ch))
+        if (char.IsPunctuation(character))
         {
-            if (immediatelyRemove && s != null) s = s.Remove(dx, 1);
+            if (isImmediatelyRemoving && text != null) text = text.Remove(index, 1);
             return true;
         }
 
         return false;
     }
-
-
-
-
-
-
-
-
 }

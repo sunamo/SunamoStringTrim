@@ -1,20 +1,35 @@
-### SunamoStringTrim
+# SunamoStringTrim
 
-Part of PlatformIndependentNuGetPackages:
+A lightweight .NET library providing various string trimming utilities beyond what the standard `String.Trim()` offers.
 
-- [nuget.org](https://www.nuget.org/profiles/sunamo)
-- [github.org](https://github.com/sunamo/PlatformIndependentNuGetPackages)
+## Features
 
-Another links:
+- **TrimStartingAndTrailingChars** - Trims special characters (whitespace and punctuation) from both ends, collecting removed characters
+- **TrimIsNotNull** - Null-safe trim that returns empty string for null input
+- **TrimNewLineAndTab** - Removes tab, carriage return, newline, and non-breaking space characters
+- **TrimStartAndEnd** - Trims characters using custom predicate functions
+- **TrimEndSpaces** - Trims trailing spaces
+- **TrimBrackets** - Removes surrounding parentheses
+- **TrimStart / TrimEnd** - Trims specified prefix or suffix strings (repeating)
+- **TrimIfStartsWith** - Conditionally trims a prefix and returns whether it was found
+- **Trim** - Trims a substring from both ends
+- **AdvancedTrim** - Removes non-breaking spaces and trims whitespace
+- **TrimLeadingNumbersAtStart / TrimTrailingNumbersAtEnd** - Removes numeric characters from start or end
 
-- [Developer site](https://sunamo.cz)
+## Installation
 
-Request for new features / bug report / etc: [Mail](mailto:radek.jancik@sunamo.cz) or on GitHub
+```
+dotnet add package SunamoStringTrim
+```
+
 ## Target Frameworks
 
-**TargetFrameworks:** `net10.0;net9.0;net8.0`
+`net10.0`, `net9.0`, `net8.0`
 
-**Reason:** Code uses C# 12.0 features (collection expressions, primary constructors) or dependencies requiring .NET 8.0+:
-- Collection expressions `[]` syntax requires C# 12.0 (net8.0+)
-- Primary constructors require C# 12.0 (net8.0+) 
-- Entity Framework Core 9.x requires net8.0+
+## Links
+
+- [NuGet](https://www.nuget.org/profiles/sunamo)
+- [GitHub](https://github.com/sunamo/PlatformIndependentNuGetPackages)
+- [Developer site](https://sunamo.cz)
+
+For feature requests or bug reports: [Email](mailto:radek.jancik@sunamo.cz) or open an issue on GitHub.
