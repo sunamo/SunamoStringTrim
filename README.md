@@ -1,5 +1,10 @@
 # SunamoStringTrim
 
+## Short description
+
+Knihovna s metodami pro ořezávání řetězců (třída SHTrim). Součást sbírky pinp s testy a Runnerem.
+
+
 Methods for trimming strings
 
 ## Overview
